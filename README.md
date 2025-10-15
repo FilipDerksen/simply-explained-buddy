@@ -171,26 +171,22 @@ Set these in your repository settings:
 
 **For Frontend Deployment:**
 - `VERCEL_TOKEN` - Vercel deployment token
-- `VERCEL_ORG_ID` - Vercel organization ID  
+- `VERCEL_ORG_ID` - Vercel organization ID (e.g., `team_5viqMA6tAFOdw4GaQnxEnqNh`)
 - `VERCEL_PROJECT_ID` - Vercel project ID
 
 **For Backend Deployment:**
 - `RAILWAY_TOKEN` - Railway deployment token
 - `RAILWAY_SERVICE_ID` - Railway service ID
 
-**For API Integration:**
-- `OPENAI_API_KEY` - OpenAI API key for production
-
-**For Health Checks:**
-- `STAGING_FRONTEND_URL` - Staging frontend URL
-- `STAGING_BACKEND_URL` - Staging backend URL
-- `PRODUCTION_FRONTEND_URL` - Production frontend URL
-- `PRODUCTION_BACKEND_URL` - Production backend URL
+**Optional:**
+- `OPENAI_API_KEY` - OpenAI API key (only needed for AI features)
 
 ### **Deployment Process:**
 1. **Pull Request** → Automated testing and linting
-2. **Merge to main** → Automatic staging deployment
-3. **Manual trigger** → Production deployment with approval
+2. **Merge to main** → Automatic staging deployment (frontend only)
+3. **Manual trigger** → Production deployment (frontend only)
+
+**Note**: Backend deployment is handled separately by Railway, not through GitHub Actions.
 
 ## 🔗 Links
 
