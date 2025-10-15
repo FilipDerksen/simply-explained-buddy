@@ -37,8 +37,27 @@ const Index = () => {
 
     setIsLoading(true);
     
+    // Check if we have mock data for this input first
+    const lowerInput = input.toLowerCase().trim();
+    let mockResult = mockExplanations[lowerInput];
+    
+    if (!mockResult) {
+      // Find a partial match in mock data
+      const matchKey = Object.keys(mockExplanations).find(key => 
+        lowerInput.includes(key) || key.includes(lowerInput)
+      );
+      mockResult = matchKey ? mockExplanations[matchKey] : null;
+    }
+    
+    // If we have mock data, use it directly (no API call needed)
+    if (mockResult) {
+      setExplanation(mockResult);
+      setIsLoading(false);
+      return;
+    }
+    
+    // Only call the backend API for questions not in mock data
     try {
-      // Call the backend API
       const response = await fetch('http://localhost:3001/api/explain', {
         method: 'POST',
         headers: {
@@ -61,26 +80,13 @@ const Index = () => {
       // Get the specific error message
       const errorMessage = error.message || 'Unknown error';
       
-      // Fallback to mock data if backend is not available
-      const lowerInput = input.toLowerCase().trim();
-      let result = mockExplanations[lowerInput];
-      
-      if (!result) {
-        // Find a partial match
-        const matchKey = Object.keys(mockExplanations).find(key => 
-          lowerInput.includes(key) || key.includes(lowerInput)
-        );
-        result = matchKey 
-          ? mockExplanations[matchKey]
-          : `Sorry, I couldn't connect to the AI service. Please make sure the backend server is running. For now, try one of the example prompts above to see how it works!`;
-      }
-      
-      setExplanation(result);
+      // Show error and fallback message
+      setExplanation(`Sorry, I couldn't connect to the AI service. Please make sure the backend server is running and has a valid OpenAI API key. For now, try one of the example prompts above to see how it works!`);
       
       // Show specific error toast
       toast({
         title: "AI Service Error",
-        description: `${errorMessage}. Using offline mode with example explanations.`,
+        description: `${errorMessage}. Using offline mode.`,
         variant: "destructive",
       });
     } finally {
