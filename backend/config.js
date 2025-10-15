@@ -1,4 +1,4 @@
-// Configuration file for the backend
+// Configuration file forcd  the backend
 export const config = {
   // OpenAI Configuration
   openai: {

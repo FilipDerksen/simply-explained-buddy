@@ -58,6 +58,9 @@ const Index = () => {
     } catch (error) {
       console.error('Error calling backend:', error);
       
+      // Get the specific error message
+      const errorMessage = error.message || 'Unknown error';
+      
       // Fallback to mock data if backend is not available
       const lowerInput = input.toLowerCase().trim();
       let result = mockExplanations[lowerInput];
@@ -74,10 +77,10 @@ const Index = () => {
       
       setExplanation(result);
       
-      // Show error toast
+      // Show specific error toast
       toast({
-        title: "Backend Connection Failed",
-        description: "Using offline mode. Make sure the backend server is running.",
+        title: "AI Service Error",
+        description: `${errorMessage}. Using offline mode with example explanations.`,
         variant: "destructive",
       });
     } finally {
