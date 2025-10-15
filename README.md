@@ -108,7 +108,7 @@ PORT=3001
 FRONTEND_URL=http://localhost:8080
 ```
 
-**Note**: `OPENAI_MODEL` is optional and defaults to `gpt-3.5-turbo`
+**Note**: `OPENAI_MODEL` is optional and defaults to `gpt-3.5-turbo`.
 
 ### API Endpoints
 
