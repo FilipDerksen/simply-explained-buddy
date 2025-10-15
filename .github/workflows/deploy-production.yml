@@ -78,11 +78,16 @@ jobs:
         npm ci
         
     - name: Deploy to Railway (Production)
-      uses: railwayapp/railway-deploy@v1
+      uses: railwayapp/cli@v3
       with:
-        railway-token: ${{ secrets.RAILWAY_TOKEN }}
+        token: ${{ secrets.RAILWAY_TOKEN }}
         service: ${{ secrets.RAILWAY_SERVICE_ID }}
-        environment: production
+        # environment: production # Railway doesn't use staging environments by default
+      env:
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        NODE_ENV: production
+        PORT: 3001
+        FRONTEND_URL: ${{ secrets.PRODUCTION_FRONTEND_URL }}
         
     - name: Deploy to Render (Alternative)
       if: false  # Set to true if using Render instead of Railway
