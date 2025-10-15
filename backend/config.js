@@ -20,7 +20,7 @@ export const config = {
   
   // API Configuration
   api: {
-    maxTokens: 500,
-    temperature: 0.7,
+    maxTokens: parseInt(process.env.OPENAI_MAX_TOKENS) || 500,
+    temperature: parseFloat(process.env.OPENAI_TEMPERATURE) || 0.7,
   }
 };

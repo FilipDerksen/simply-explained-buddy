@@ -2,22 +2,23 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import OpenAI from 'openai';
+import { config } from './config.js';
 
 // Load environment variables
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = config.server.port;
 
 // Initialize OpenAI
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: config.openai.apiKey,
 });
 
 // Middleware
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:8080',
-  credentials: true
+  origin: config.cors.origin,
+  credentials: config.cors.credentials
 }));
 app.use(express.json());
 
@@ -37,7 +38,7 @@ app.post('/api/explain', async (req, res) => {
       });
     }
 
-    if (!process.env.OPENAI_API_KEY) {
+    if (!config.openai.apiKey) {
       return res.status(500).json({ 
         error: 'OpenAI API key not configured' 
       });
@@ -56,13 +57,13 @@ app.post('/api/explain', async (req, res) => {
 
     // Call OpenAI API
     const completion = await openai.chat.completions.create({
-      model: process.env.OPENAI_MODEL || 'gpt-3.5-turbo',
+      model: config.openai.model,
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userPrompt }
       ],
-      max_tokens: 500,
-      temperature: 0.7,
+      max_tokens: config.api.maxTokens,
+      temperature: config.api.temperature,
     });
 
     const explanation = completion.choices[0]?.message?.content;
