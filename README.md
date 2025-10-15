@@ -47,16 +47,22 @@ A modern web application that transforms complex topics into simple, easy-to-und
 
 ### Running the Application
 
+**Option 1: Run Everything with One Command (Recommended)**
+```bash
+npm run dev:full
+```
+This starts both frontend and backend simultaneously.
+
+**Option 2: Run Separately**
 **Terminal 1 (Frontend):**
 ```bash
 npm run dev
 ```
-Frontend runs on: http://localhost:5173
+Frontend runs on: http://localhost:8080
 
 **Terminal 2 (Backend):**
 ```bash
-cd backend
-npm run dev
+npm run dev:backend
 ```
 Backend runs on: http://localhost:3001
 
@@ -99,7 +105,7 @@ simply-explained-buddy/
 OPENAI_API_KEY=your_openai_api_key
 OPENAI_MODEL=gpt-3.5-turbo
 PORT=3001
-FRONTEND_URL=http://localhost:5173
+FRONTEND_URL=http://localhost:8080
 ```
 
 ### API Endpoints
