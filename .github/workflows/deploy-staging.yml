@@ -5,8 +5,8 @@ on:
     branches: [ main ]
 
 jobs:
-  deploy-frontend-staging:
-    name: Deploy Frontend to Staging
+  deploy-staging:
+    name: Deploy to Staging
     runs-on: ubuntu-latest
     
     steps:
@@ -35,77 +35,3 @@ jobs:
         vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
         working-directory: ./
         vercel-args: '--prod=false'
-        
-    - name: Deploy to Netlify (Alternative)
-      if: false  # Set to true if using Netlify instead of Vercel
-      uses: nwtgck/actions-netlify@v3.0
-      with:
-        publish-dir: './dist'
-        production-branch: main
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        deploy-message: "Deploy from GitHub Actions"
-        enable-pull-request-comment: false
-        enable-commit-comment: true
-        overwrites-pull-request-comment: true
-
-  deploy-backend-staging:
-    name: Deploy Backend to Staging
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-        cache: 'npm'
-        cache-dependency-path: 'backend/package-lock.json'
-        
-    - name: Install backend dependencies
-      run: |
-        cd backend
-        npm ci
-        
-    - name: Deploy to Railway (Staging)
-      run: |
-        npm install -g @railway/cli
-        echo "${{ secrets.RAILWAY_TOKEN }}" | railway login --token
-        railway up --service=${{ secrets.RAILWAY_SERVICE_ID }}
-      env:
-        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        NODE_ENV: production
-        PORT: 3001
-        FRONTEND_URL: ${{ secrets.STAGING_FRONTEND_URL }}
-        
-    - name: Deploy to Render (Alternative)
-      if: false  # Set to true if using Render instead of Railway
-      uses: johnbeynon/render-deploy-action@v0.0.8
-      with:
-        api-key: ${{ secrets.RENDER_API_KEY }}
-        service-id: ${{ secrets.RENDER_SERVICE_ID }}
-
-  smoke-test-staging:
-    name: Smoke Test Staging
-    runs-on: ubuntu-latest
-    needs: [deploy-frontend-staging, deploy-backend-staging]
-    
-    steps:
-    - name: Wait for deployment
-      run: sleep 30
-      
-    - name: Test staging backend
-      run: |
-        curl -f ${{ secrets.STAGING_BACKEND_URL }}/health || exit 1
-        
-    - name: Test staging frontend
-      run: |
-        curl -f ${{ secrets.STAGING_FRONTEND_URL }} || exit 1
-        
-    - name: Test API integration
-      run: |
-        curl -X POST ${{ secrets.STAGING_BACKEND_URL }}/api/explain \
-          -H "Content-Type: application/json" \
-          -d '{"question":"test"}' \
-          --max-time 10 || echo "API test completed (may fail without OpenAI key)"
