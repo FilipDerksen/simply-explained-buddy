@@ -25,7 +25,7 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
-  const handleExplain = () => {
+  const handleExplain = async () => {
     if (!input.trim()) {
       toast({
         title: "Oops!",
@@ -37,8 +37,28 @@ const Index = () => {
 
     setIsLoading(true);
     
-    // Simulate AI processing
-    setTimeout(() => {
+    try {
+      // Call the backend API
+      const response = await fetch('http://localhost:3001/api/explain', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ question: input.trim() }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to get explanation');
+      }
+
+      const data = await response.json();
+      setExplanation(data.explanation);
+      
+    } catch (error) {
+      console.error('Error calling backend:', error);
+      
+      // Fallback to mock data if backend is not available
       const lowerInput = input.toLowerCase().trim();
       let result = mockExplanations[lowerInput];
       
@@ -49,12 +69,20 @@ const Index = () => {
         );
         result = matchKey 
           ? mockExplanations[matchKey]
-          : `Great question! To get real AI-powered explanations, you'll need to enable the backend. For now, try one of the example prompts above to see how it works!`;
+          : `Sorry, I couldn't connect to the AI service. Please make sure the backend server is running. For now, try one of the example prompts above to see how it works!`;
       }
       
       setExplanation(result);
+      
+      // Show error toast
+      toast({
+        title: "Backend Connection Failed",
+        description: "Using offline mode. Make sure the backend server is running.",
+        variant: "destructive",
+      });
+    } finally {
       setIsLoading(false);
-    }, 1500);
+    }
   };
 
   const handleExampleClick = (example: string) => {
@@ -112,7 +140,7 @@ const Index = () => {
             <Button
               onClick={handleExplain}
               disabled={isLoading}
-              className="w-full bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-all shadow-lg hover:shadow-xl disabled:opacity-50"
+              className="w-full bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-all shadow-lg hover:shadow-xl hover:scale-105 disabled:opacity-50 disabled:hover:scale-100"
               size="lg"
             >
               {isLoading ? (
