@@ -171,7 +171,7 @@ Set these in your repository settings:
 
 **For Frontend Deployment:**
 - `VERCEL_TOKEN` - Vercel deployment token
-- `VERCEL_ORG_ID` - Vercel organization ID (e.g., `team_5viqMA6tAFOdw4GaQnxEnqNh`)
+- `VERCEL_ORG_ID` - Vercel organization ID
 - `VERCEL_PROJECT_ID` - Vercel project ID
 
 **For Backend Deployment:**
