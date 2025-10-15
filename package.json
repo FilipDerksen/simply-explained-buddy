@@ -10,7 +10,10 @@
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:frontend": "npm run lint && npm run build",
+    "test:build": "npm run build && echo 'Build test passed'",
+    "test:type": "tsc --noEmit"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

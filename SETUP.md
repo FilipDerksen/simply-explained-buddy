@@ -141,3 +141,45 @@ const response = await fetch('https://your-backend-url.com/api/explain', {
 1. **CORS errors**: Make sure `FRONTEND_URL` in backend `.env` matches your frontend URL
 2. **API key errors**: Verify your OpenAI API key is correct and has credits
 3. **Connection errors**: Ensure both servers are running simultaneously
+
+## 🚀 CI/CD Setup
+
+### GitHub Actions Configuration
+
+The project includes automated CI/CD workflows that run on GitHub Actions.
+
+#### **Required GitHub Secrets:**
+Navigate to your repository → Settings → Secrets and variables → Actions
+
+**Frontend Deployment (Vercel):**
+```
+VERCEL_TOKEN=your_vercel_token
+VERCEL_ORG_ID=your_org_id
+VERCEL_PROJECT_ID=your_project_id
+```
+
+**Backend Deployment (Railway):**
+```
+RAILWAY_TOKEN=your_railway_token
+RAILWAY_SERVICE_ID=your_service_id
+```
+
+**Environment URLs:**
+```
+STAGING_FRONTEND_URL=https://staging.your-app.vercel.app
+STAGING_BACKEND_URL=https://staging-backend.railway.app
+PRODUCTION_FRONTEND_URL=https://your-app.vercel.app
+PRODUCTION_BACKEND_URL=https://backend.railway.app
+```
+
+#### **Workflow Triggers:**
+- **CI**: Runs on every pull request
+- **Staging**: Auto-deploys on merge to main
+- **Production**: Manual trigger with approval
+
+#### **Branch Protection:**
+Enable branch protection rules:
+1. Go to Settings → Branches
+2. Add rule for `main` branch
+3. Require status checks: `CI - Test and Lint`
+4. Require pull request reviews

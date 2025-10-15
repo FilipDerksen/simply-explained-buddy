@@ -157,6 +157,41 @@ FRONTEND_URL=http://localhost:8080
 
 This project is open source and available under the [MIT License](LICENSE).
 
+## 🚀 CI/CD Pipeline
+
+This project includes automated CI/CD using GitHub Actions:
+
+### **Automated Workflows:**
+- **CI**: Runs on every pull request - tests, lints, and builds
+- **Staging**: Auto-deploys to staging on merge to main
+- **Production**: Manual deployment with approval gate
+
+### **Required GitHub Secrets:**
+Set these in your repository settings:
+
+**For Frontend Deployment:**
+- `VERCEL_TOKEN` - Vercel deployment token
+- `VERCEL_ORG_ID` - Vercel organization ID  
+- `VERCEL_PROJECT_ID` - Vercel project ID
+
+**For Backend Deployment:**
+- `RAILWAY_TOKEN` - Railway deployment token
+- `RAILWAY_SERVICE_ID` - Railway service ID
+
+**For API Integration:**
+- `OPENAI_API_KEY` - OpenAI API key for production
+
+**For Health Checks:**
+- `STAGING_FRONTEND_URL` - Staging frontend URL
+- `STAGING_BACKEND_URL` - Staging backend URL
+- `PRODUCTION_FRONTEND_URL` - Production frontend URL
+- `PRODUCTION_BACKEND_URL` - Production backend URL
+
+### **Deployment Process:**
+1. **Pull Request** → Automated testing and linting
+2. **Merge to main** → Automatic staging deployment
+3. **Manual trigger** → Production deployment with approval
+
 ## 🔗 Links
 
 - **Original Lovable Project**: https://lovable.dev/projects/7f6f33f1-7392-4985-a5fd-5fd6ffe93530
