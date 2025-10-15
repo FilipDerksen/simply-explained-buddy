@@ -1,4 +1,4 @@
-// Configuration file forcd  the backend
+// Configuration file for the backend
 export const config = {
   // OpenAI Configuration
   openai: {
@@ -14,7 +14,7 @@ export const config = {
   
   // CORS Configuration
   cors: {
-    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    origin: process.env.FRONTEND_URL || 'http://localhost:8080',
     credentials: true,
   },
   
