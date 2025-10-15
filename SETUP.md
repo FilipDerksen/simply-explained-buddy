@@ -52,7 +52,7 @@ npm run dev
 
 Backend runs on: `http://localhost:3001`
 
-### 3. Get OpenAI API Key
+### 3. Get OpenAI API Key (Optional)
 
 1. Visit [OpenAI Platform](https://platform.openai.com/)
 2. Create an account or sign in
@@ -63,6 +63,8 @@ Backend runs on: `http://localhost:3001`
 ```
 OPENAI_API_KEY=sk-your-actual-key-here
 ```
+
+**Note**: The app works perfectly without an API key using example explanations!
 
 ## Running Both Servers
 

@@ -16,7 +16,7 @@ A modern web application that transforms complex topics into simple, easy-to-und
 
 - Node.js (v18 or higher)
 - npm or yarn
-- OpenAI API key
+- OpenAI API key (optional - app works without it!)
 
 ### Installation
 
@@ -38,12 +38,13 @@ A modern web application that transforms complex topics into simple, easy-to-und
    cp env.example .env
    ```
 
-4. **Configure OpenAI API**
+4. **Configure OpenAI API (Optional)**
    - Get your API key from [OpenAI Platform](https://platform.openai.com/)
    - Add it to `backend/.env`:
      ```
-     OPENAI_API_KEY=your_api_key_here
+     OPENAI_API_KEY=sk-your-actual-key-here
      ```
+   - **Note**: The app works perfectly without an API key using example explanations!
 
 ### Running the Application
 
@@ -102,11 +103,12 @@ simply-explained-buddy/
 
 **Backend (.env):**
 ```
-OPENAI_API_KEY=your_openai_api_key
-OPENAI_MODEL=gpt-3.5-turbo
+OPENAI_API_KEY=sk-your-actual-key-here
 PORT=3001
 FRONTEND_URL=http://localhost:8080
 ```
+
+**Note**: `OPENAI_MODEL` is optional and defaults to `gpt-3.5-turbo`
 
 ### API Endpoints
 
