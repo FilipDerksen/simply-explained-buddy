@@ -192,4 +192,3 @@ Set these in your repository settings:
 
 - **Original Lovable Project**: https://lovable.dev/projects/7f6f33f1-7392-4985-a5fd-5fd6ffe93530
 - **OpenAI Platform**: https://platform.openai.com/
-- **Documentation**: See `SETUP.md` for detailed setup instructions
